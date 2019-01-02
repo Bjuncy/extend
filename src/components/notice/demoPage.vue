@@ -16,7 +16,8 @@
         <li>this.$notice.close(name)</li>
         <li>this.$notice.destroy()</li>
       </ul>
-       <table border="1" cellspacing="0" cellpadding="0">
+      <p>提供render函数，可自定义text内容，若text和render同时存在，优先取render函数！</p>
+      <table border="1" cellspacing="0" cellpadding="0">
         <tr>
           <th width="100">属性</th>
           <th width="300">说明</th>
@@ -104,7 +105,17 @@ export default {
     open1 () {
       this.$notice.open({
         title: '推荐',
-        text: '自从有了debug小黄鸭，bug都少了！'
+        text: '自从有了debug小黄鸭，bug都少了！',
+        render: h => {
+          return h('span', {
+            'style': {
+              color: 'green',
+              fontSize: '14px',
+              padding: '10px',
+              display: 'block'
+            }
+          }, 'special')
+        }
       })
     },
     open2 () {

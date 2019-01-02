@@ -2,7 +2,10 @@
 <transition :name="transitionName">
   <div class="notice" :class="type" v-if="show" :id="name">
     <h4 class="notice-title" v-if="title">{{title}}</h4>
-    <div class="notice-info" :class="{'no-title': !title}">
+    <render-cell
+    :render="renderFunc" v-if="isRender">
+    </render-cell>
+    <div class="notice-info" :class="{'no-title': !title}" v-else>
       <i class="icon-type iconfont" :class="'icon-'+type" v-show="type"></i>
       <p class="describe">{{text}}</p>
     </div>
@@ -10,6 +13,7 @@
   </div>
 </transition></template>
 <script>
+import RenderCell from './render.js'
 export default {
   name: 'demo',
   data () {
@@ -22,14 +26,24 @@ export default {
       type: '',
       id: '',
       name: '',
-      transitionName: 'notice-slide'
+      transitionName: 'notice-slide',
+      render: () => {},
+      isRender: false
     }
+  },
+  components: {
+    RenderCell
   },
   methods: {
     close () {
       this.show = false
       this.$notice.close(this.name)
       this.onclose && (typeof this.onclose === 'function') && this.onclose()
+    }
+  },
+  computed: {
+    renderFunc () {
+      return this.render || function () {}
     }
   }
 }

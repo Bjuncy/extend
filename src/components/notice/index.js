@@ -40,6 +40,10 @@ let myDemo = () => {
       if (obj.onclose) {
         newNotice.onclose = obj.onclose
       }
+      if (obj.render && typeof obj.render === 'function') {
+        newNotice.render = obj.render
+        newNotice.isRender = true
+      }
       newNotice.type = type
     } else if (typeof obj === 'string' || typeof obj === 'number') {
       newNotice.text = obj
